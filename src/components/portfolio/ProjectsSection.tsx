@@ -40,36 +40,49 @@ export function ProjectsSection() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: i * 0.1, duration: 0.6 }}
-              className="group p-5 rounded-sm cyber-card hover:neon-border transition-all duration-500 flex flex-col"
+              whileHover={{
+                y: -6,
+                borderColor: 'var(--neon)',
+                boxShadow: '0 0 25px -5px var(--neon), 0 20px 40px -15px var(--neon)',
+              }}
+              className="group p-5 rounded-sm cyber-card transition-all duration-500 flex flex-col cursor-default"
             >
               <div className="flex items-center justify-between mb-4">
                 <div className="flex items-center gap-2">
-                  <div className="p-1.5 rounded-sm bg-primary/10 text-primary">
+                  <motion.div
+                    whileHover={{ scale: 1.2, rotate: 10 }}
+                    className="p-1.5 rounded-sm bg-primary/10 text-primary"
+                  >
                     {categoryIcons[project.category]}
-                  </div>
+                  </motion.div>
                   <span className="text-[10px] font-mono text-primary tracking-[0.2em] uppercase">
                     {categoryLabels[project.category]}
                   </span>
                 </div>
-                <ArrowUpRight className="size-4 text-muted-foreground/30 group-hover:text-primary group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all" />
+                <ArrowUpRight className="size-4 text-muted-foreground/30 group-hover:text-primary group-hover:translate-x-1 group-hover:-translate-y-1 transition-all duration-300" />
               </div>
 
-              <h4 className="font-semibold text-base mb-2 group-hover:text-primary transition-colors leading-tight">
+              <h4 className="font-semibold text-base mb-2 group-hover:text-primary transition-colors duration-300 leading-tight">
                 {project.title}
               </h4>
 
-              <p className="text-[10px] font-mono text-neon-pink/70 mb-4 tracking-wider">
+              <p className="text-[10px] font-mono text-neon-pink/70 mb-4 tracking-wider group-hover:text-neon-pink transition-colors duration-300">
                 {project.techStack}
               </p>
 
               <ul className="space-y-2 flex-1">
                 {project.points.map((point, j) => (
-                  <li key={j} className="text-xs text-muted-foreground leading-relaxed flex items-start gap-2">
+                  <li key={j} className="text-xs text-muted-foreground leading-relaxed flex items-start gap-2 group-hover:text-muted-foreground/90 transition-colors">
                     <span className="text-primary mt-0.5 text-[10px] font-mono">▸</span>
                     <span>{point}</span>
                   </li>
                 ))}
               </ul>
+
+              {/* Bottom accent line */}
+              <div className="mt-4 pt-3 border-t border-border/50 group-hover:border-primary/30 transition-colors">
+                <div className="h-0.5 w-0 group-hover:w-full bg-gradient-to-r from-primary to-neon-pink transition-all duration-700 rounded-full" />
+              </div>
             </motion.div>
           ))}
         </div>

@@ -1,5 +1,6 @@
 import { personalInfo } from '@/data/profile';
 import { Github, Linkedin, Cpu } from 'lucide-react';
+import { motion } from 'framer-motion';
 
 export function FooterSection() {
   return (
@@ -9,18 +10,28 @@ export function FooterSection() {
           <span className="text-primary">©</span> {new Date().getFullYear()} {personalInfo.name}
           <span className="text-muted-foreground/40 ml-2">// All rights reserved</span>
         </p>
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-2">
           {personalInfo.socialLinks.github && (
-            <a href={personalInfo.socialLinks.github} target="_blank" rel="noopener noreferrer"
-              className="p-2 rounded-sm text-muted-foreground hover:text-primary hover:bg-primary/5 transition-all">
+            <motion.a
+              href={personalInfo.socialLinks.github}
+              target="_blank"
+              rel="noopener noreferrer"
+              whileHover={{ scale: 1.15, y: -2 }}
+              className="p-2 rounded-sm text-muted-foreground hover:text-primary hover:bg-primary/5 transition-all"
+            >
               <Github className="size-4" />
-            </a>
+            </motion.a>
           )}
           {personalInfo.socialLinks.linkedin && (
-            <a href={personalInfo.socialLinks.linkedin} target="_blank" rel="noopener noreferrer"
-              className="p-2 rounded-sm text-muted-foreground hover:text-primary hover:bg-primary/5 transition-all">
+            <motion.a
+              href={personalInfo.socialLinks.linkedin}
+              target="_blank"
+              rel="noopener noreferrer"
+              whileHover={{ scale: 1.15, y: -2 }}
+              className="p-2 rounded-sm text-muted-foreground hover:text-primary hover:bg-primary/5 transition-all"
+            >
               <Linkedin className="size-4" />
-            </a>
+            </motion.a>
           )}
         </div>
       </div>

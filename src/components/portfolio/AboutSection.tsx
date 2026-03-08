@@ -1,6 +1,6 @@
 import { motion } from 'framer-motion';
 import { personalInfo, education } from '@/data/profile';
-import { GraduationCap, MapPin, Database } from 'lucide-react';
+import { GraduationCap, MapPin } from 'lucide-react';
 
 export function AboutSection() {
   return (
@@ -27,19 +27,30 @@ export function AboutSection() {
           transition={{ delay: 0.1 }}
           className="space-y-6"
         >
-          <div className="p-6 rounded-sm cyber-card">
-            <p className="text-base text-muted-foreground leading-relaxed font-mono text-sm">
+          <motion.div
+            whileHover={{ borderColor: 'var(--neon)', boxShadow: '0 0 15px -5px var(--neon)' }}
+            transition={{ duration: 0.3 }}
+            className="p-6 rounded-sm cyber-card"
+          >
+            <p className="text-sm text-muted-foreground leading-relaxed font-mono">
               <span className="text-primary">const</span>{' '}
               <span className="text-neon-pink">bio</span> ={' '}
               <span className="text-muted-foreground/80">"{personalInfo.summary}"</span>
             </p>
-          </div>
+          </motion.div>
 
-          <div className="p-6 rounded-sm cyber-card space-y-4">
+          <motion.div
+            whileHover={{ borderColor: 'var(--neon)', boxShadow: '0 0 15px -5px var(--neon)' }}
+            transition={{ duration: 0.3 }}
+            className="p-6 rounded-sm cyber-card space-y-4"
+          >
             <div className="flex items-center gap-3">
-              <div className="p-2 rounded-sm bg-primary/10 neon-border">
+              <motion.div
+                whileHover={{ scale: 1.1, rotate: 5 }}
+                className="p-2 rounded-sm bg-primary/10 neon-border"
+              >
                 <GraduationCap className="size-5 text-primary" />
-              </div>
+              </motion.div>
               <div>
                 <p className="font-semibold text-foreground">{education.institution}</p>
                 <p className="text-sm text-muted-foreground font-mono">{education.degree}</p>
@@ -54,12 +65,16 @@ export function AboutSection() {
             </div>
             <div className="flex flex-wrap gap-2 pt-2">
               {education.coursework.map(course => (
-                <span key={course} className="px-3 py-1 rounded-sm text-xs font-mono bg-secondary border border-border text-secondary-foreground hover:border-primary/30 transition-colors">
+                <motion.span
+                  key={course}
+                  whileHover={{ scale: 1.05, borderColor: 'var(--neon)', color: 'var(--primary)', backgroundColor: 'hsl(185 100% 50% / 0.05)' }}
+                  className="px-3 py-1 rounded-sm text-xs font-mono bg-secondary border border-border text-secondary-foreground transition-colors cursor-default"
+                >
                   {course}
-                </span>
+                </motion.span>
               ))}
             </div>
-          </div>
+          </motion.div>
         </motion.div>
       </div>
     </section>
