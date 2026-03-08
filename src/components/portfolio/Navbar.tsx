@@ -36,29 +36,29 @@ export function Navbar() {
       className={cn(
         'fixed top-0 left-0 right-0 z-50 transition-all duration-300',
         scrolled
-          ? 'bg-background/80 backdrop-blur-xl border-b border-border/50'
+          ? 'bg-background/80 backdrop-blur-xl border-b border-border/40'
           : 'bg-transparent'
       )}
     >
       <div className="max-w-5xl mx-auto px-6 flex items-center justify-between h-14">
         <button
           onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
-          className="font-display text-sm text-foreground font-semibold tracking-wide hover:text-primary transition-colors"
+          className="font-display text-sm text-foreground font-semibold tracking-wider hover:text-primary transition-colors"
         >
           {personalInfo.name.split(' ')[0]}
         </button>
 
-        <div className="hidden md:flex items-center gap-1">
+        <div className="hidden md:flex items-center gap-0.5">
           {navLinks.map(link => (
             <button
               key={link.href}
               onClick={() => scrollTo(link.href)}
-              className="px-3 py-1.5 text-xs text-muted-foreground hover:text-foreground transition-colors rounded-md hover:bg-muted/50"
+              className="px-3 py-1.5 text-xs text-muted-foreground hover:text-foreground hover:bg-muted/50 transition-all rounded-lg"
             >
               {link.name}
             </button>
           ))}
-          <div className="ml-2 pl-2 border-l border-border/50">
+          <div className="ml-2 pl-2 border-l border-border/40">
             <ThemeToggle />
           </div>
         </div>
@@ -75,13 +75,13 @@ export function Navbar() {
         <motion.div
           initial={{ opacity: 0, height: 0 }}
           animate={{ opacity: 1, height: 'auto' }}
-          className="md:hidden bg-background/95 backdrop-blur-xl border-b border-border/50 px-6 py-3 space-y-1"
+          className="md:hidden bg-background/95 backdrop-blur-xl border-b border-border/40 px-6 py-3 space-y-0.5"
         >
           {navLinks.map(link => (
             <button
               key={link.href}
               onClick={() => scrollTo(link.href)}
-              className="block w-full text-left text-sm text-muted-foreground hover:text-foreground py-2 px-3 rounded-md hover:bg-muted/50 transition-colors"
+              className="block w-full text-left text-sm text-muted-foreground hover:text-foreground py-2.5 px-3 rounded-lg hover:bg-muted/50 transition-colors"
             >
               {link.name}
             </button>

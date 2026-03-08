@@ -19,7 +19,7 @@ function TypeWriter({ text, delay = 0 }: { text: string; delay?: number }) {
       setDisplayed(text.slice(0, i + 1));
       i++;
       if (i >= text.length) clearInterval(interval);
-    }, 50);
+    }, 45);
     return () => clearInterval(interval);
   }, [started, text]);
 
@@ -41,69 +41,103 @@ export function HeroSection() {
 
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
-      {/* Subtle background — single soft glow, no grid/hex/particles */}
-      <div className="absolute top-1/3 left-1/2 -translate-x-1/2 w-[600px] h-[600px] rounded-full bg-primary/6 blur-[160px]" />
+      {/* Layered background */}
+      <div className="absolute inset-0 bg-gradient-to-b from-primary/[0.03] via-transparent to-background" />
+      <div className="absolute top-1/4 left-1/2 -translate-x-1/2 w-[800px] h-[800px] rounded-full bg-primary/[0.04] blur-[150px]" />
+      <div className="absolute bottom-1/3 right-1/4 w-[400px] h-[400px] rounded-full bg-neon-pink/[0.03] blur-[120px]" />
+      
+      {/* Grid lines */}
+      <div className="absolute inset-0 opacity-[0.03]" style={{
+        backgroundImage: 'linear-gradient(var(--primary) 1px, transparent 1px), linear-gradient(90deg, var(--primary) 1px, transparent 1px)',
+        backgroundSize: '100px 100px',
+      }} />
 
-      <div className="relative z-10 max-w-3xl mx-auto px-6 text-center space-y-10">
+      {/* Floating dots */}
+      {[...Array(5)].map((_, i) => (
+        <motion.div
+          key={i}
+          className="absolute w-1 h-1 rounded-full bg-primary/30"
+          style={{ top: `${15 + i * 18}%`, left: `${10 + i * 18}%` }}
+          animate={{ y: [0, -20, 0], opacity: [0.2, 0.5, 0.2] }}
+          transition={{ duration: 4 + i, repeat: Infinity, delay: i * 0.5 }}
+        />
+      ))}
+
+      <div className="relative z-10 max-w-4xl mx-auto px-6 text-center space-y-10">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
-          className="space-y-5"
+          transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
+          className="space-y-6"
         >
           <motion.span
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.2 }}
-            className="inline-block px-3 py-1 rounded-full text-[11px] font-mono text-primary/80 border border-primary/20 bg-primary/5 tracking-wider"
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ delay: 0.3 }}
+            className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-[11px] font-mono text-primary border border-primary/20 bg-primary/5 tracking-wider"
           >
-            Open to opportunities
+            <span className="w-1.5 h-1.5 rounded-full bg-primary animate-pulse shadow-[0_0_6px] shadow-primary" />
+            Available for opportunities
           </motion.span>
 
-          <h1 className="text-5xl md:text-7xl lg:text-8xl font-display font-bold tracking-tight leading-[0.95]">
+          <h1 className="text-5xl md:text-7xl lg:text-[5.5rem] font-display font-bold tracking-tight leading-[0.9]">
             <span className="text-foreground">Divyanshu</span>
             <br />
-            <span className="text-foreground/40 text-4xl md:text-5xl lg:text-6xl font-light">Puri</span>
+            <motion.span
+              className="text-gradient-neon"
+              whileHover={{ filter: 'brightness(1.15)' }}
+            >
+              Puri
+            </motion.span>
           </h1>
 
-          <div className="text-lg md:text-xl text-muted-foreground font-sans font-light">
+          <div className="text-lg md:text-xl text-muted-foreground font-mono font-light">
             <TypeWriter text={personalInfo.tagline} delay={600} />
           </div>
+
+          <p className="text-sm text-muted-foreground/60 max-w-xl mx-auto leading-relaxed">
+            Building Transformer models from scratch · Designing RAG systems · Optimizing ML pipelines for production
+          </p>
         </motion.div>
 
-        {/* Contact links — clean, minimal */}
+        {/* Contact links */}
         <motion.div
           initial={{ opacity: 0, y: 15 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.4 }}
+          transition={{ duration: 0.6, delay: 0.5 }}
           className="flex items-center justify-center gap-2 flex-wrap"
         >
-          {contactLinks.map(link => (
-            <a
+          {contactLinks.map((link, i) => (
+            <motion.a
               key={link.label}
               href={link.href}
               target={link.external ? '_blank' : undefined}
               rel="noopener noreferrer"
-              className="group flex items-center gap-2 px-3 py-2 rounded-md text-muted-foreground hover:text-foreground hover:bg-muted/50 transition-all duration-200"
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.6 + i * 0.08 }}
+              whileHover={{ y: -3, borderColor: 'var(--primary)' }}
+              className="group flex items-center gap-2 px-4 py-2.5 rounded-lg border border-border bg-card/40 backdrop-blur-sm text-muted-foreground hover:text-foreground hover:bg-primary/5 hover:shadow-[0_0_20px_-8px] hover:shadow-primary/30 transition-all duration-300"
             >
-              <link.icon className="size-4 text-muted-foreground/60 group-hover:text-primary transition-colors" />
-              <span className="text-xs font-mono hidden sm:inline">{link.label}</span>
-            </a>
+              <link.icon className="size-4 group-hover:text-primary transition-colors duration-300" />
+              <span className="text-xs font-mono hidden sm:inline group-hover:text-primary transition-colors duration-300">{link.label}</span>
+            </motion.a>
           ))}
         </motion.div>
 
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{ delay: 1.5 }}
+          transition={{ delay: 1.8 }}
           className="absolute bottom-10 left-1/2 -translate-x-1/2"
         >
           <button
             onClick={() => document.querySelector('#about')?.scrollIntoView({ behavior: 'smooth' })}
-            className="text-muted-foreground/30 hover:text-primary transition-colors"
+            className="flex flex-col items-center gap-1.5 text-muted-foreground/30 hover:text-primary transition-colors group"
           >
+            <span className="text-[9px] font-mono tracking-[0.3em] uppercase opacity-0 group-hover:opacity-100 transition-opacity">scroll</span>
             <motion.div animate={{ y: [0, 5, 0] }} transition={{ duration: 2, repeat: Infinity }}>
-              <ChevronDown className="size-5" />
+              <ChevronDown className="size-4" />
             </motion.div>
           </button>
         </motion.div>
