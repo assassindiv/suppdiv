@@ -4,15 +4,19 @@ import { GraduationCap, MapPin } from 'lucide-react';
 
 export function AboutSection() {
   return (
-    <section id="about" className="py-24 md:py-32 px-6">
-      <div className="max-w-3xl mx-auto space-y-10">
+    <section id="about" className="py-24 md:py-32 px-6 relative overflow-hidden">
+      <div className="absolute inset-0 bg-gradient-to-b from-transparent via-primary/[0.02] to-transparent" />
+
+      <div className="relative max-w-3xl mx-auto space-y-10">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
+          className="space-y-1"
         >
-          <p className="text-sm uppercase tracking-[0.2em] text-primary/60 font-mono mb-2">About</p>
-          <h2 className="text-2xl md:text-3xl font-display font-bold tracking-tight">Background</h2>
+          <p className="text-xs uppercase tracking-[0.25em] text-primary font-mono">About</p>
+          <h2 className="text-3xl md:text-4xl font-display font-bold tracking-tight">Background</h2>
+          <div className="w-12 h-0.5 bg-gradient-to-r from-primary to-neon-pink rounded-full mt-3" />
         </motion.div>
 
         <motion.p
@@ -20,7 +24,7 @@ export function AboutSection() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ delay: 0.1 }}
-          className="text-muted-foreground leading-relaxed text-[15px]"
+          className="text-muted-foreground leading-[1.8] text-[15px]"
         >
           {personalInfo.summary}
         </motion.p>
@@ -30,32 +34,40 @@ export function AboutSection() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ delay: 0.15 }}
-          className="p-5 rounded-lg border border-border bg-card/50 hover:border-primary/30 transition-colors duration-300"
+          whileHover={{ borderColor: 'var(--primary)', y: -2 }}
+          className="group p-6 rounded-xl border border-border bg-card/50 backdrop-blur-sm hover:shadow-[0_0_30px_-10px] hover:shadow-primary/20 transition-all duration-400 relative overflow-hidden"
         >
-          <div className="flex items-start gap-3 mb-3">
-            <div className="p-2 rounded-md bg-primary/10">
-              <GraduationCap className="size-4 text-primary" />
-            </div>
+          {/* Top accent line */}
+          <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-primary/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+
+          <div className="flex items-start gap-4 mb-4">
+            <motion.div
+              whileHover={{ scale: 1.1, rotate: 5 }}
+              className="p-2.5 rounded-lg bg-primary/10 border border-primary/20"
+            >
+              <GraduationCap className="size-5 text-primary" />
+            </motion.div>
             <div>
-              <p className="font-semibold text-foreground text-sm">{education.institution}</p>
-              <p className="text-xs text-muted-foreground mt-0.5">{education.degree}</p>
+              <p className="font-semibold text-foreground">{education.institution}</p>
+              <p className="text-sm text-muted-foreground mt-0.5">{education.degree}</p>
             </div>
           </div>
-          <div className="flex items-center gap-3 text-xs text-muted-foreground ml-11 mb-3">
-            <span>{education.period}</span>
+          <div className="flex items-center gap-4 text-xs text-muted-foreground ml-[52px] mb-4">
+            <span className="px-2 py-0.5 rounded-md bg-primary/5 border border-primary/15 text-primary/80">{education.period}</span>
             <span className="flex items-center gap-1">
-              <MapPin className="size-3" />
+              <MapPin className="size-3 text-primary/60" />
               {education.location}
             </span>
           </div>
-          <div className="flex flex-wrap gap-1.5 ml-11">
+          <div className="flex flex-wrap gap-2 ml-[52px]">
             {education.coursework.map(course => (
-              <span
+              <motion.span
                 key={course}
-                className="px-2 py-0.5 rounded text-[11px] bg-muted text-muted-foreground border border-border hover:border-primary/30 hover:text-foreground transition-colors cursor-default"
+                whileHover={{ scale: 1.05, borderColor: 'var(--primary)' }}
+                className="px-2.5 py-1 rounded-md text-[11px] bg-muted/80 text-muted-foreground border border-border hover:text-foreground hover:bg-primary/5 transition-all duration-200 cursor-default"
               >
                 {course}
-              </span>
+              </motion.span>
             ))}
           </div>
         </motion.div>
