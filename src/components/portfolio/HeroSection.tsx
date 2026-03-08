@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import { Github, Linkedin, Mail, Phone, ChevronDown, Terminal } from 'lucide-react';
+import { Github, Linkedin, Mail, Phone, ChevronDown } from 'lucide-react';
 import { personalInfo } from '@/data/profile';
 import { useEffect, useState } from 'react';
 
@@ -26,7 +26,7 @@ function TypeWriter({ text, delay = 0 }: { text: string; delay?: number }) {
   return (
     <span>
       {displayed}
-      <span className="animate-pulse text-primary">_</span>
+      <span className="animate-pulse text-primary">|</span>
     </span>
   );
 }
@@ -40,90 +40,55 @@ export function HeroSection() {
   ].filter(l => l.href);
 
   return (
-    <section className="relative min-h-screen flex items-center justify-center overflow-hidden scanline-overlay">
-      <div className="absolute inset-0 grid-bg" />
-      <div className="absolute inset-0 hex-pattern opacity-30" />
+    <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
+      {/* Subtle background — single soft glow, no grid/hex/particles */}
+      <div className="absolute top-1/3 left-1/2 -translate-x-1/2 w-[600px] h-[600px] rounded-full bg-primary/6 blur-[160px]" />
 
-      {/* Glows */}
-      <div className="absolute top-1/3 left-1/4 w-[500px] h-[500px] rounded-full bg-primary/8 blur-[120px] animate-[pulse_6s_ease-in-out_infinite]" />
-      <div className="absolute bottom-1/4 right-1/4 w-[400px] h-[400px] rounded-full bg-neon-pink/5 blur-[100px] animate-[pulse_8s_ease-in-out_infinite]" />
-
-      {/* Floating particles */}
-      {[...Array(8)].map((_, i) => (
+      <div className="relative z-10 max-w-3xl mx-auto px-6 text-center space-y-10">
         <motion.div
-          key={i}
-          className="absolute w-1 h-1 rounded-full bg-primary/50"
-          style={{ top: `${10 + i * 11}%`, left: `${8 + i * 11}%` }}
-          animate={{ y: [0, -40, 0], opacity: [0.1, 0.7, 0.1], scale: [1, 1.5, 1] }}
-          transition={{ duration: 3 + i * 0.7, repeat: Infinity, delay: i * 0.3 }}
-        />
-      ))}
-
-      <div className="relative z-10 max-w-5xl mx-auto px-6 text-center space-y-8">
-        <motion.div
-          initial={{ opacity: 0, y: 40 }}
+          initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1, ease: [0.22, 1, 0.36, 1] }}
-          className="space-y-6"
+          transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
+          className="space-y-5"
         >
-          <motion.div
-            initial={{ opacity: 0, scale: 0.9 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ delay: 0.3 }}
-            className="inline-flex items-center gap-2 px-4 py-2 rounded-sm neon-border bg-primary/5 text-primary text-xs font-mono tracking-widest uppercase hover:bg-primary/10 hover:shadow-[0_0_20px_-5px] hover:shadow-primary transition-all duration-300 cursor-default"
+          <motion.span
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.2 }}
+            className="inline-block px-3 py-1 rounded-full text-[11px] font-mono text-primary/80 border border-primary/20 bg-primary/5 tracking-wider"
           >
-            <Terminal className="size-3" />
-            <span className="w-1.5 h-1.5 rounded-full bg-primary animate-pulse shadow-[0_0_8px] shadow-primary" />
-            System.status: Available
-          </motion.div>
+            Open to opportunities
+          </motion.span>
 
-          <h1 className="text-5xl md:text-7xl lg:text-8xl font-display font-bold tracking-tight leading-none">
-            <span className="text-foreground">I'm </span>
-            <motion.span
-              className="text-gradient-neon inline-block"
-              whileHover={{ scale: 1.05, filter: 'brightness(1.2)' }}
-              transition={{ type: 'spring', stiffness: 300 }}
-            >
-              {personalInfo.name.split(' ')[0]}
-            </motion.span>
+          <h1 className="text-5xl md:text-7xl lg:text-8xl font-display font-bold tracking-tight leading-[0.95]">
+            <span className="text-foreground">Divyanshu</span>
+            <br />
+            <span className="text-foreground/40 text-4xl md:text-5xl lg:text-6xl font-light">Puri</span>
           </h1>
 
-          <div className="text-xl md:text-2xl font-mono text-muted-foreground">
-            <span className="text-primary/60">{'> '}</span>
-            <TypeWriter text={personalInfo.tagline} delay={800} />
+          <div className="text-lg md:text-xl text-muted-foreground font-sans font-light">
+            <TypeWriter text={personalInfo.tagline} delay={600} />
           </div>
-
-          <p className="text-sm md:text-base text-muted-foreground/70 max-w-2xl mx-auto font-mono leading-relaxed">
-            Building Transformer models from scratch • Designing RAG systems • Optimizing ML pipelines for production
-          </p>
         </motion.div>
 
-        {/* Social & Contact Icons */}
+        {/* Contact links — clean, minimal */}
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 15 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.5 }}
-          className="flex items-center justify-center gap-3 flex-wrap"
+          transition={{ duration: 0.6, delay: 0.4 }}
+          className="flex items-center justify-center gap-2 flex-wrap"
         >
           {contactLinks.map(link => (
-            <motion.a
+            <a
               key={link.label}
               href={link.href}
               target={link.external ? '_blank' : undefined}
               rel="noopener noreferrer"
-              whileHover={{ scale: 1.08, y: -4 }}
-              whileTap={{ scale: 0.95 }}
-              className="group relative flex items-center gap-2 px-4 py-2.5 rounded-sm border border-border bg-card/50 backdrop-blur-sm hover:neon-border hover:bg-primary/5 transition-all duration-300"
+              className="group flex items-center gap-2 px-3 py-2 rounded-md text-muted-foreground hover:text-foreground hover:bg-muted/50 transition-all duration-200"
             >
-              <link.icon className="size-4 text-muted-foreground group-hover:text-primary transition-colors duration-300" />
-              <span className="text-xs font-mono text-muted-foreground group-hover:text-primary transition-colors duration-300 hidden sm:inline">
-                {link.label}
-              </span>
-              {/* Mobile tooltip */}
-              <span className="sm:hidden absolute -bottom-8 left-1/2 -translate-x-1/2 text-[10px] font-mono text-primary opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">
-                {link.label}
-              </span>
-            </motion.a>
+              <link.icon className="size-4 text-muted-foreground/60 group-hover:text-primary transition-colors" />
+              <span className="text-xs font-mono hidden sm:inline">{link.label}</span>
+            </a>
           ))}
         </motion.div>
 
@@ -131,15 +96,14 @@ export function HeroSection() {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 1.5 }}
-          className="absolute bottom-8 left-1/2 -translate-x-1/2"
+          className="absolute bottom-10 left-1/2 -translate-x-1/2"
         >
           <button
             onClick={() => document.querySelector('#about')?.scrollIntoView({ behavior: 'smooth' })}
-            className="flex flex-col items-center gap-2 text-muted-foreground/40 hover:text-primary transition-colors group"
+            className="text-muted-foreground/30 hover:text-primary transition-colors"
           >
-            <span className="text-[10px] font-mono tracking-[0.3em] uppercase group-hover:tracking-[0.5em] transition-all">Scroll</span>
-            <motion.div animate={{ y: [0, 6, 0] }} transition={{ duration: 1.5, repeat: Infinity }}>
-              <ChevronDown className="size-4" />
+            <motion.div animate={{ y: [0, 5, 0] }} transition={{ duration: 2, repeat: Infinity }}>
+              <ChevronDown className="size-5" />
             </motion.div>
           </button>
         </motion.div>

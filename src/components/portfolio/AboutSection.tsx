@@ -4,77 +4,60 @@ import { GraduationCap, MapPin } from 'lucide-react';
 
 export function AboutSection() {
   return (
-    <section id="about" className="relative py-24 md:py-32 px-6 overflow-hidden">
-      <div className="absolute inset-0 hex-pattern opacity-10" />
-
-      <div className="relative max-w-4xl mx-auto space-y-12">
+    <section id="about" className="py-24 md:py-32 px-6">
+      <div className="max-w-3xl mx-auto space-y-10">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="space-y-3"
         >
-          <h2 className="font-mono text-xs text-primary tracking-[0.3em] uppercase">
-            <span className="text-neon-pink">{'>'}</span> about.init()
-          </h2>
-          <h3 className="text-3xl md:text-4xl font-display font-bold tracking-tight">Background</h3>
+          <p className="text-sm uppercase tracking-[0.2em] text-primary/60 font-mono mb-2">About</p>
+          <h2 className="text-2xl md:text-3xl font-display font-bold tracking-tight">Background</h2>
         </motion.div>
 
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
+        <motion.p
+          initial={{ opacity: 0, y: 15 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ delay: 0.1 }}
-          className="space-y-6"
+          className="text-muted-foreground leading-relaxed text-[15px]"
         >
-          <motion.div
-            whileHover={{ borderColor: 'var(--neon)', boxShadow: '0 0 15px -5px var(--neon)' }}
-            transition={{ duration: 0.3 }}
-            className="p-6 rounded-sm cyber-card"
-          >
-            <p className="text-sm text-muted-foreground leading-relaxed font-mono">
-              <span className="text-primary">const</span>{' '}
-              <span className="text-neon-pink">bio</span> ={' '}
-              <span className="text-muted-foreground/80">"{personalInfo.summary}"</span>
-            </p>
-          </motion.div>
+          {personalInfo.summary}
+        </motion.p>
 
-          <motion.div
-            whileHover={{ borderColor: 'var(--neon)', boxShadow: '0 0 15px -5px var(--neon)' }}
-            transition={{ duration: 0.3 }}
-            className="p-6 rounded-sm cyber-card space-y-4"
-          >
-            <div className="flex items-center gap-3">
-              <motion.div
-                whileHover={{ scale: 1.1, rotate: 5 }}
-                className="p-2 rounded-sm bg-primary/10 neon-border"
+        <motion.div
+          initial={{ opacity: 0, y: 15 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ delay: 0.15 }}
+          className="p-5 rounded-lg border border-border bg-card/50 hover:border-primary/30 transition-colors duration-300"
+        >
+          <div className="flex items-start gap-3 mb-3">
+            <div className="p-2 rounded-md bg-primary/10">
+              <GraduationCap className="size-4 text-primary" />
+            </div>
+            <div>
+              <p className="font-semibold text-foreground text-sm">{education.institution}</p>
+              <p className="text-xs text-muted-foreground mt-0.5">{education.degree}</p>
+            </div>
+          </div>
+          <div className="flex items-center gap-3 text-xs text-muted-foreground ml-11 mb-3">
+            <span>{education.period}</span>
+            <span className="flex items-center gap-1">
+              <MapPin className="size-3" />
+              {education.location}
+            </span>
+          </div>
+          <div className="flex flex-wrap gap-1.5 ml-11">
+            {education.coursework.map(course => (
+              <span
+                key={course}
+                className="px-2 py-0.5 rounded text-[11px] bg-muted text-muted-foreground border border-border hover:border-primary/30 hover:text-foreground transition-colors cursor-default"
               >
-                <GraduationCap className="size-5 text-primary" />
-              </motion.div>
-              <div>
-                <p className="font-semibold text-foreground">{education.institution}</p>
-                <p className="text-sm text-muted-foreground font-mono">{education.degree}</p>
-              </div>
-            </div>
-            <div className="flex items-center gap-4 text-xs text-muted-foreground font-mono">
-              <span className="px-2 py-1 rounded-sm bg-primary/5 border border-primary/20">{education.period}</span>
-              <span className="flex items-center gap-1">
-                <MapPin className="size-3 text-primary" />
-                {education.location}
+                {course}
               </span>
-            </div>
-            <div className="flex flex-wrap gap-2 pt-2">
-              {education.coursework.map(course => (
-                <motion.span
-                  key={course}
-                  whileHover={{ scale: 1.05, borderColor: 'var(--neon)', color: 'var(--primary)', backgroundColor: 'hsl(185 100% 50% / 0.05)' }}
-                  className="px-3 py-1 rounded-sm text-xs font-mono bg-secondary border border-border text-secondary-foreground transition-colors cursor-default"
-                >
-                  {course}
-                </motion.span>
-              ))}
-            </div>
-          </motion.div>
+            ))}
+          </div>
         </motion.div>
       </div>
     </section>

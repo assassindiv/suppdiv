@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { Menu, X, Cpu } from 'lucide-react';
+import { Menu, X } from 'lucide-react';
 import { personalInfo } from '@/data/profile';
 import { ThemeToggle } from '@/components/layout/ThemeToggle';
 import { cn } from '@/lib/utils';
@@ -32,20 +32,19 @@ export function Navbar() {
     <motion.nav
       initial={{ y: -100 }}
       animate={{ y: 0 }}
-      transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+      transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
       className={cn(
-        'fixed top-0 left-0 right-0 z-50 transition-all duration-500',
+        'fixed top-0 left-0 right-0 z-50 transition-all duration-300',
         scrolled
-          ? 'bg-background/70 backdrop-blur-2xl border-b border-primary/10'
+          ? 'bg-background/80 backdrop-blur-xl border-b border-border/50'
           : 'bg-transparent'
       )}
     >
-      <div className="max-w-6xl mx-auto px-6 flex items-center justify-between h-16">
+      <div className="max-w-5xl mx-auto px-6 flex items-center justify-between h-14">
         <button
           onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
-          className="flex items-center gap-2 font-display text-xs text-primary font-semibold tracking-[0.2em] uppercase hover:text-neon-pink transition-colors"
+          className="font-display text-sm text-foreground font-semibold tracking-wide hover:text-primary transition-colors"
         >
-          <Cpu className="size-4" />
           {personalInfo.name.split(' ')[0]}
         </button>
 
@@ -54,12 +53,12 @@ export function Navbar() {
             <button
               key={link.href}
               onClick={() => scrollTo(link.href)}
-              className="px-3 py-1.5 text-xs text-muted-foreground hover:text-primary hover:bg-primary/5 rounded-sm transition-all font-mono tracking-wider uppercase"
+              className="px-3 py-1.5 text-xs text-muted-foreground hover:text-foreground transition-colors rounded-md hover:bg-muted/50"
             >
               {link.name}
             </button>
           ))}
-          <div className="ml-2 pl-2 border-l border-border">
+          <div className="ml-2 pl-2 border-l border-border/50">
             <ThemeToggle />
           </div>
         </div>
@@ -76,14 +75,13 @@ export function Navbar() {
         <motion.div
           initial={{ opacity: 0, height: 0 }}
           animate={{ opacity: 1, height: 'auto' }}
-          exit={{ opacity: 0, height: 0 }}
-          className="md:hidden bg-background/95 backdrop-blur-2xl border-b border-primary/10 px-6 py-4 space-y-1"
+          className="md:hidden bg-background/95 backdrop-blur-xl border-b border-border/50 px-6 py-3 space-y-1"
         >
           {navLinks.map(link => (
             <button
               key={link.href}
               onClick={() => scrollTo(link.href)}
-              className="block w-full text-left text-xs text-muted-foreground hover:text-primary transition-colors font-mono tracking-wider uppercase py-2.5 px-3 hover:bg-primary/5 rounded-sm"
+              className="block w-full text-left text-sm text-muted-foreground hover:text-foreground py-2 px-3 rounded-md hover:bg-muted/50 transition-colors"
             >
               {link.name}
             </button>
