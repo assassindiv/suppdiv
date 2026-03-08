@@ -65,6 +65,7 @@ export const projects: Project[] = [
     ],
     slug: 'web-chat-groq',
     category: 'web',
+    githubUrl: 'https://github.com/assassindiv/gpt_webchat',
   },
 ];
 
