@@ -40,6 +40,7 @@ export const projects: Project[] = [
     ],
     slug: 'transformer-lm',
     category: 'ml',
+    githubUrl: 'https://github.com/assassindiv/Small-LM',
   },
   {
     id: '2',
@@ -64,6 +65,7 @@ export const projects: Project[] = [
     ],
     slug: 'web-chat-groq',
     category: 'web',
+    githubUrl: 'https://github.com/assassindiv/gpt_webchat',
   },
 ];
 

@@ -76,7 +76,13 @@ export function ProjectsSection() {
                     {categoryLabels[project.category]}
                   </span>
                 </div>
-                <ArrowUpRight className="size-3.5 text-muted-foreground/20 group-hover:text-primary group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all duration-300" />
+                {project.githubUrl ? (
+                  <a href={project.githubUrl} target="_blank" rel="noopener noreferrer" className="text-muted-foreground/20 hover:text-primary transition-colors" onClick={(e) => e.stopPropagation()}>
+                    <ArrowUpRight className="size-3.5 group-hover:text-primary group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all duration-300" />
+                  </a>
+                ) : (
+                  <ArrowUpRight className="size-3.5 text-muted-foreground/20 group-hover:text-primary group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all duration-300" />
+                )}
               </div>
 
               <h3 className="font-semibold text-sm mb-2 text-foreground group-hover:text-primary transition-colors duration-300 leading-snug">

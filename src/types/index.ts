@@ -27,6 +27,7 @@ export interface Project {
   points: string[];
   slug: string;
   category: 'ml' | 'nlp' | 'web';
+  githubUrl?: string;
 }
 
 export interface Education {
