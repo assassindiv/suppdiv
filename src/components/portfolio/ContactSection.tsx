@@ -30,20 +30,24 @@ export function ContactSection() {
           transition={{ delay: 0.1 }}
           className="flex flex-col sm:flex-row items-center justify-center gap-4"
         >
-          <a
+          <motion.a
             href={`mailto:${personalInfo.email}`}
+            whileHover={{ scale: 1.03, y: -2, boxShadow: '0 0 25px -5px var(--neon), 0 10px 30px -10px var(--neon)' }}
+            whileTap={{ scale: 0.98 }}
             className="group flex items-center gap-3 px-6 py-3 rounded-sm neon-border bg-primary/5 text-primary hover:bg-primary hover:text-primary-foreground transition-all duration-300 font-mono text-xs tracking-wider"
           >
-            <Send className="size-4 group-hover:translate-x-0.5 transition-transform" />
+            <Send className="size-4 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
             {personalInfo.email}
-          </a>
-          <a
+          </motion.a>
+          <motion.a
             href={`tel:${personalInfo.phone}`}
-            className="flex items-center gap-3 px-6 py-3 rounded-sm border border-border bg-card hover:neon-border transition-all duration-300 font-mono text-xs text-muted-foreground tracking-wider"
+            whileHover={{ scale: 1.03, y: -2, borderColor: 'var(--neon)', boxShadow: '0 0 15px -5px var(--neon)' }}
+            whileTap={{ scale: 0.98 }}
+            className="flex items-center gap-3 px-6 py-3 rounded-sm border border-border bg-card hover:bg-primary/5 transition-all duration-300 font-mono text-xs text-muted-foreground tracking-wider"
           >
             <Phone className="size-4" />
             {personalInfo.phone}
-          </a>
+          </motion.a>
         </motion.div>
 
         <motion.div

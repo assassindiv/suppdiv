@@ -1,11 +1,10 @@
 import { motion } from 'framer-motion';
 import { experience } from '@/data/profile';
-import { Briefcase, MapPin, Zap } from 'lucide-react';
+import { MapPin, Zap } from 'lucide-react';
 
 export function ExperienceSection() {
   return (
     <section id="experience" className="relative py-24 md:py-32 px-6 overflow-hidden">
-      {/* Subtle diagonal lines */}
       <div className="absolute inset-0 opacity-[0.02]" style={{
         backgroundImage: 'repeating-linear-gradient(45deg, var(--neon) 0, var(--neon) 1px, transparent 0, transparent 50%)',
         backgroundSize: '30px 30px',
@@ -25,7 +24,6 @@ export function ExperienceSection() {
         </motion.div>
 
         <div className="relative space-y-6">
-          {/* Timeline line */}
           <div className="absolute left-[23px] top-8 bottom-8 w-px bg-gradient-to-b from-primary/50 via-primary/20 to-transparent hidden md:block" />
 
           {experience.map((exp, i) => (
@@ -35,16 +33,16 @@ export function ExperienceSection() {
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
               transition={{ delay: i * 0.15 }}
-              className="relative p-6 rounded-sm cyber-card ml-0 md:ml-12"
+              whileHover={{ borderColor: 'var(--neon)', boxShadow: '0 0 20px -5px var(--neon), inset 0 0 20px -15px var(--neon)' }}
+              className="relative p-6 rounded-sm cyber-card ml-0 md:ml-12 transition-all duration-300"
             >
-              {/* Timeline dot */}
               <div className="hidden md:flex absolute -left-[calc(3rem+7px)] top-8 w-3.5 h-3.5 rounded-full bg-primary shadow-[0_0_10px] shadow-primary border-2 border-background" />
 
               <div className="flex flex-col md:flex-row md:items-center justify-between gap-2 mb-4">
                 <div className="flex items-center gap-3">
-                  <div className="p-2 rounded-sm bg-primary/10">
+                  <motion.div whileHover={{ scale: 1.15, rotate: 10 }} className="p-2 rounded-sm bg-primary/10">
                     <Zap className="size-4 text-primary" />
-                  </div>
+                  </motion.div>
                   <div>
                     <h4 className="font-semibold text-lg text-foreground">{exp.role}</h4>
                     <p className="text-primary font-mono text-xs tracking-wider">{exp.company}</p>
@@ -60,10 +58,15 @@ export function ExperienceSection() {
               </div>
               <ul className="space-y-3 ml-0 md:ml-11">
                 {exp.points.map((point, j) => (
-                  <li key={j} className="text-muted-foreground text-sm leading-relaxed flex items-start gap-2">
+                  <motion.li
+                    key={j}
+                    whileHover={{ x: 4 }}
+                    transition={{ type: 'spring', stiffness: 400 }}
+                    className="text-muted-foreground text-sm leading-relaxed flex items-start gap-2 cursor-default"
+                  >
                     <span className="text-primary mt-1 text-xs font-mono">▸</span>
                     {point}
-                  </li>
+                  </motion.li>
                 ))}
               </ul>
             </motion.div>

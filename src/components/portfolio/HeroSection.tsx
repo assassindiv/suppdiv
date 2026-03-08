@@ -34,34 +34,21 @@ function TypeWriter({ text, delay = 0 }: { text: string; delay?: number }) {
 export function HeroSection() {
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden scanline-overlay">
-      {/* Animated grid */}
       <div className="absolute inset-0 grid-bg" />
-
-      {/* Hex pattern overlay */}
       <div className="absolute inset-0 hex-pattern opacity-30" />
 
-      {/* Multiple radial glows */}
-      <div className="absolute top-1/3 left-1/4 w-[500px] h-[500px] rounded-full bg-primary/8 blur-[120px]" />
-      <div className="absolute bottom-1/4 right-1/4 w-[400px] h-[400px] rounded-full bg-neon-pink/5 blur-[100px]" />
+      {/* Glows */}
+      <div className="absolute top-1/3 left-1/4 w-[500px] h-[500px] rounded-full bg-primary/8 blur-[120px] animate-[pulse_6s_ease-in-out_infinite]" />
+      <div className="absolute bottom-1/4 right-1/4 w-[400px] h-[400px] rounded-full bg-neon-pink/5 blur-[100px] animate-[pulse_8s_ease-in-out_infinite]" />
 
-      {/* Floating particles effect using motion */}
-      {[...Array(6)].map((_, i) => (
+      {/* Floating particles */}
+      {[...Array(8)].map((_, i) => (
         <motion.div
           key={i}
-          className="absolute w-1 h-1 rounded-full bg-primary/40"
-          style={{
-            top: `${15 + i * 15}%`,
-            left: `${10 + i * 14}%`,
-          }}
-          animate={{
-            y: [0, -30, 0],
-            opacity: [0.2, 0.8, 0.2],
-          }}
-          transition={{
-            duration: 3 + i * 0.5,
-            repeat: Infinity,
-            delay: i * 0.4,
-          }}
+          className="absolute w-1 h-1 rounded-full bg-primary/50"
+          style={{ top: `${10 + i * 11}%`, left: `${8 + i * 11}%` }}
+          animate={{ y: [0, -40, 0], opacity: [0.1, 0.7, 0.1], scale: [1, 1.5, 1] }}
+          transition={{ duration: 3 + i * 0.7, repeat: Infinity, delay: i * 0.3 }}
         />
       ))}
 
@@ -72,25 +59,28 @@ export function HeroSection() {
           transition={{ duration: 1, ease: [0.22, 1, 0.36, 1] }}
           className="space-y-6"
         >
-          {/* Terminal-style status badge */}
           <motion.div
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ delay: 0.3 }}
-            className="inline-flex items-center gap-2 px-4 py-2 rounded-sm neon-border bg-primary/5 text-primary text-xs font-mono tracking-widest uppercase"
+            className="inline-flex items-center gap-2 px-4 py-2 rounded-sm neon-border bg-primary/5 text-primary text-xs font-mono tracking-widest uppercase hover:bg-primary/10 hover:shadow-[0_0_20px_-5px] hover:shadow-primary transition-all duration-300 cursor-default"
           >
             <Terminal className="size-3" />
             <span className="w-1.5 h-1.5 rounded-full bg-primary animate-pulse shadow-[0_0_8px] shadow-primary" />
             System.status: Available
           </motion.div>
 
-          {/* Main heading with Orbitron */}
           <h1 className="text-5xl md:text-7xl lg:text-8xl font-display font-bold tracking-tight leading-none">
             <span className="text-foreground">I'm </span>
-            <span className="text-gradient-neon">{personalInfo.name.split(' ')[0]}</span>
+            <motion.span
+              className="text-gradient-neon inline-block"
+              whileHover={{ scale: 1.05, filter: 'brightness(1.2)' }}
+              transition={{ type: 'spring', stiffness: 300 }}
+            >
+              {personalInfo.name.split(' ')[0]}
+            </motion.span>
           </h1>
 
-          {/* Typewriter tagline */}
           <div className="text-xl md:text-2xl font-mono text-muted-foreground">
             <span className="text-primary/60">{'> '}</span>
             <TypeWriter text={personalInfo.tagline} delay={800} />
@@ -101,7 +91,6 @@ export function HeroSection() {
           </p>
         </motion.div>
 
-        {/* Social links with neon hover */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -113,19 +102,24 @@ export function HeroSection() {
             { icon: Linkedin, href: personalInfo.socialLinks.linkedin, label: 'LinkedIn' },
             { icon: Mail, href: `mailto:${personalInfo.email}`, label: 'Email' },
           ].filter(l => l.href).map(link => (
-            <a
+            <motion.a
               key={link.label}
               href={link.href}
               target={link.label !== 'Email' ? '_blank' : undefined}
               rel="noopener noreferrer"
-              className="group p-3 rounded-sm border border-border bg-card/50 backdrop-blur-sm hover:neon-border hover:bg-primary/5 transition-all duration-300"
+              whileHover={{ scale: 1.1, y: -3 }}
+              whileTap={{ scale: 0.95 }}
+              className="group relative p-3 rounded-sm border border-border bg-card/50 backdrop-blur-sm hover:neon-border hover:bg-primary/5 transition-all duration-300"
             >
               <link.icon className="size-5 text-muted-foreground group-hover:text-primary transition-colors duration-300" />
-            </a>
+              {/* Tooltip */}
+              <span className="absolute -bottom-8 left-1/2 -translate-x-1/2 text-[10px] font-mono text-primary opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">
+                {link.label}
+              </span>
+            </motion.a>
           ))}
         </motion.div>
 
-        {/* Scroll indicator */}
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
@@ -134,13 +128,10 @@ export function HeroSection() {
         >
           <button
             onClick={() => document.querySelector('#about')?.scrollIntoView({ behavior: 'smooth' })}
-            className="flex flex-col items-center gap-2 text-muted-foreground/40 hover:text-primary transition-colors"
+            className="flex flex-col items-center gap-2 text-muted-foreground/40 hover:text-primary transition-colors group"
           >
-            <span className="text-[10px] font-mono tracking-[0.3em] uppercase">Scroll</span>
-            <motion.div
-              animate={{ y: [0, 6, 0] }}
-              transition={{ duration: 1.5, repeat: Infinity }}
-            >
+            <span className="text-[10px] font-mono tracking-[0.3em] uppercase group-hover:tracking-[0.5em] transition-all">Scroll</span>
+            <motion.div animate={{ y: [0, 6, 0] }} transition={{ duration: 1.5, repeat: Infinity }}>
               <ChevronDown className="size-4" />
             </motion.div>
           </button>

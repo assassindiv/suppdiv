@@ -30,19 +30,30 @@ export function SkillsSection() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: i * 0.08 }}
-              className="p-5 rounded-sm cyber-card"
+              whileHover={{
+                borderColor: 'var(--neon)',
+                boxShadow: '0 0 20px -5px var(--neon)',
+              }}
+              className="p-5 rounded-sm cyber-card transition-all duration-300"
             >
               <h4 className="font-mono text-[10px] text-primary mb-4 tracking-[0.3em] uppercase border-b border-primary/10 pb-3">
                 {cat.name}
               </h4>
               <div className="flex flex-wrap gap-1.5">
                 {cat.skills.map(skill => (
-                  <span
+                  <motion.span
                     key={skill}
-                    className="px-2.5 py-1 rounded-sm text-xs font-mono bg-secondary border border-border text-secondary-foreground hover:neon-border hover:text-primary hover:bg-primary/5 transition-all duration-300 cursor-default"
+                    whileHover={{
+                      scale: 1.08,
+                      y: -2,
+                      borderColor: 'var(--neon)',
+                      boxShadow: '0 0 10px -3px var(--neon)',
+                    }}
+                    transition={{ type: 'spring', stiffness: 400, damping: 15 }}
+                    className="px-2.5 py-1 rounded-sm text-xs font-mono bg-secondary border border-border text-secondary-foreground hover:text-primary hover:bg-primary/5 transition-colors duration-200 cursor-default"
                   >
                     {skill}
-                  </span>
+                  </motion.span>
                 ))}
               </div>
             </motion.div>
