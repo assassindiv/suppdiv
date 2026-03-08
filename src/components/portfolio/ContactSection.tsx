@@ -2,18 +2,28 @@ import { motion } from 'framer-motion';
 import { personalInfo } from '@/data/profile';
 import { Mail, Phone, MapPin, Github, Linkedin, ArrowUpRight } from 'lucide-react';
 
+const stagger = {
+  hidden: {},
+  visible: { transition: { staggerChildren: 0.1 } },
+};
+const fadeUp = {
+  hidden: { opacity: 0, y: 25, filter: 'blur(6px)' },
+  visible: { opacity: 1, y: 0, filter: 'blur(0px)', transition: { duration: 0.7, ease: [0.22, 1, 0.36, 1] } },
+};
+
 export function ContactSection() {
   return (
     <section id="contact" className="py-24 md:py-32 px-6 relative overflow-hidden">
       <div className="absolute inset-0 bg-gradient-to-t from-primary/[0.03] to-transparent" />
 
-      <div className="relative max-w-2xl mx-auto text-center space-y-8">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          className="space-y-1"
-        >
+      <motion.div
+        variants={stagger}
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, margin: '-80px' }}
+        className="relative max-w-2xl mx-auto text-center space-y-8"
+      >
+        <motion.div variants={fadeUp} className="space-y-1">
           <p className="text-xs uppercase tracking-[0.25em] text-primary font-mono">Contact</p>
           <h2 className="text-3xl md:text-4xl font-display font-bold tracking-tight">Get in Touch</h2>
           <div className="w-12 h-0.5 bg-gradient-to-r from-primary to-neon-pink rounded-full mt-3 mx-auto" />
@@ -22,13 +32,7 @@ export function ContactSection() {
           </p>
         </motion.div>
 
-        <motion.div
-          initial={{ opacity: 0, y: 15 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ delay: 0.1 }}
-          className="flex flex-col sm:flex-row items-center justify-center gap-3"
-        >
+        <motion.div variants={fadeUp} className="flex flex-col sm:flex-row items-center justify-center gap-3">
           <motion.a
             href={`mailto:${personalInfo.email}`}
             whileHover={{ y: -2, boxShadow: '0 0 25px -8px var(--primary)' }}
@@ -48,13 +52,7 @@ export function ContactSection() {
           </motion.a>
         </motion.div>
 
-        <motion.div
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          viewport={{ once: true }}
-          transition={{ delay: 0.15 }}
-          className="flex items-center justify-center gap-2"
-        >
+        <motion.div variants={fadeUp} className="flex items-center justify-center gap-2">
           {[
             { icon: Github, href: personalInfo.socialLinks.github, label: 'GitHub' },
             { icon: Linkedin, href: personalInfo.socialLinks.linkedin, label: 'LinkedIn' },
@@ -73,11 +71,11 @@ export function ContactSection() {
           ))}
         </motion.div>
 
-        <p className="flex items-center justify-center gap-1.5 text-xs text-muted-foreground/50">
+        <motion.p variants={fadeUp} className="flex items-center justify-center gap-1.5 text-xs text-muted-foreground/50">
           <MapPin className="size-3" />
           {personalInfo.location}
-        </p>
-      </div>
+        </motion.p>
+      </motion.div>
     </section>
   );
 }

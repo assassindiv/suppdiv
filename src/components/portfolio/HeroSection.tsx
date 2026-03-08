@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import { Github, Linkedin, Mail, Phone, ChevronDown } from 'lucide-react';
+import { Github, Linkedin, Mail, Phone, ChevronDown, Download } from 'lucide-react';
 import { personalInfo } from '@/data/profile';
 import { useEffect, useState } from 'react';
 
@@ -41,18 +41,15 @@ export function HeroSection() {
 
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
-      {/* Layered background */}
       <div className="absolute inset-0 bg-gradient-to-b from-primary/[0.03] via-transparent to-background" />
       <div className="absolute top-1/4 left-1/2 -translate-x-1/2 w-[800px] h-[800px] rounded-full bg-primary/[0.04] blur-[150px]" />
       <div className="absolute bottom-1/3 right-1/4 w-[400px] h-[400px] rounded-full bg-neon-pink/[0.03] blur-[120px]" />
       
-      {/* Grid lines */}
       <div className="absolute inset-0 opacity-[0.03]" style={{
         backgroundImage: 'linear-gradient(var(--primary) 1px, transparent 1px), linear-gradient(90deg, var(--primary) 1px, transparent 1px)',
         backgroundSize: '100px 100px',
       }} />
 
-      {/* Floating dots */}
       {[...Array(5)].map((_, i) => (
         <motion.div
           key={i}
@@ -100,29 +97,42 @@ export function HeroSection() {
           </p>
         </motion.div>
 
-        {/* Contact links */}
+        {/* Resume + Contact */}
         <motion.div
           initial={{ opacity: 0, y: 15 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.5 }}
-          className="flex items-center justify-center gap-2 flex-wrap"
+          className="flex flex-col items-center gap-4"
         >
-          {contactLinks.map((link, i) => (
-            <motion.a
-              key={link.label}
-              href={link.href}
-              target={link.external ? '_blank' : undefined}
-              rel="noopener noreferrer"
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.6 + i * 0.08 }}
-              whileHover={{ y: -3, borderColor: 'var(--primary)' }}
-              className="group flex items-center gap-2 px-4 py-2.5 rounded-lg border border-border bg-card/40 backdrop-blur-sm text-muted-foreground hover:text-foreground hover:bg-primary/5 hover:shadow-[0_0_20px_-8px] hover:shadow-primary/30 transition-all duration-300"
-            >
-              <link.icon className="size-4 group-hover:text-primary transition-colors duration-300" />
-              <span className="text-xs font-mono hidden sm:inline group-hover:text-primary transition-colors duration-300">{link.label}</span>
-            </motion.a>
-          ))}
+          <motion.a
+            href="/resume.pdf"
+            download
+            whileHover={{ scale: 1.04, boxShadow: '0 0 30px -5px var(--primary)' }}
+            whileTap={{ scale: 0.97 }}
+            className="inline-flex items-center gap-2.5 px-6 py-3 rounded-xl bg-primary text-primary-foreground font-semibold text-sm tracking-wide hover:brightness-110 transition-all duration-300 shadow-[0_0_20px_-8px] shadow-primary/40"
+          >
+            <Download className="size-4" />
+            Download Resume
+          </motion.a>
+
+          <div className="flex items-center justify-center gap-2 flex-wrap">
+            {contactLinks.map((link, i) => (
+              <motion.a
+                key={link.label}
+                href={link.href}
+                target={link.external ? '_blank' : undefined}
+                rel="noopener noreferrer"
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.6 + i * 0.08 }}
+                whileHover={{ y: -3, borderColor: 'var(--primary)' }}
+                className="group flex items-center gap-2 px-4 py-2.5 rounded-lg border border-border bg-card/40 backdrop-blur-sm text-muted-foreground hover:text-foreground hover:bg-primary/5 hover:shadow-[0_0_20px_-8px] hover:shadow-primary/30 transition-all duration-300"
+              >
+                <link.icon className="size-4 group-hover:text-primary transition-colors duration-300" />
+                <span className="text-xs font-mono hidden sm:inline group-hover:text-primary transition-colors duration-300">{link.label}</span>
+              </motion.a>
+            ))}
+          </div>
         </motion.div>
 
         <motion.div

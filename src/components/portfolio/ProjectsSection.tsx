@@ -14,6 +14,22 @@ const categoryLabels: Record<string, string> = {
   web: 'Web App',
 };
 
+const stagger = {
+  hidden: {},
+  visible: { transition: { staggerChildren: 0.12 } },
+};
+const fadeUp = {
+  hidden: { opacity: 0, y: 30, filter: 'blur(6px)' },
+  visible: { opacity: 1, y: 0, filter: 'blur(0px)', transition: { duration: 0.7, ease: [0.22, 1, 0.36, 1] } },
+};
+const cardReveal = {
+  hidden: { opacity: 0, y: 40, scale: 0.95 },
+  visible: (i: number) => ({
+    opacity: 1, y: 0, scale: 1,
+    transition: { delay: i * 0.12, duration: 0.6, ease: [0.22, 1, 0.36, 1] },
+  }),
+};
+
 export function ProjectsSection() {
   return (
     <section id="projects" className="py-24 md:py-32 px-6 relative overflow-hidden">
@@ -21,35 +37,40 @@ export function ProjectsSection() {
 
       <div className="relative max-w-5xl mx-auto space-y-10">
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          className="space-y-1"
+          variants={stagger}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: '-80px' }}
         >
-          <p className="text-xs uppercase tracking-[0.25em] text-primary font-mono">Projects</p>
-          <h2 className="text-3xl md:text-4xl font-display font-bold tracking-tight">Featured Work</h2>
-          <div className="w-12 h-0.5 bg-gradient-to-r from-primary to-neon-pink rounded-full mt-3" />
+          <motion.div variants={fadeUp} className="space-y-1 mb-10">
+            <p className="text-xs uppercase tracking-[0.25em] text-primary font-mono">Projects</p>
+            <h2 className="text-3xl md:text-4xl font-display font-bold tracking-tight">Featured Work</h2>
+            <div className="w-12 h-0.5 bg-gradient-to-r from-primary to-neon-pink rounded-full mt-3" />
+          </motion.div>
         </motion.div>
 
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-5">
           {projects.map((project, i) => (
             <motion.div
               key={project.id}
-              initial={{ opacity: 0, y: 25 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: i * 0.1, duration: 0.5 }}
-              whileHover={{ y: -4, borderColor: 'var(--primary)' }}
+              custom={i}
+              variants={cardReveal}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true, margin: '-60px' }}
+              whileHover={{ y: -6, borderColor: 'var(--primary)' }}
               className="group p-5 rounded-xl border border-border bg-card/50 backdrop-blur-sm hover:shadow-[0_4px_30px_-8px] hover:shadow-primary/20 transition-all duration-400 flex flex-col relative overflow-hidden cursor-default"
             >
-              {/* Top accent */}
               <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-primary/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
 
               <div className="flex items-center justify-between mb-4">
                 <div className="flex items-center gap-2">
-                  <span className="text-primary/60 group-hover:text-primary transition-colors duration-300">
+                  <motion.span
+                    className="text-primary/60 group-hover:text-primary transition-colors duration-300"
+                    whileHover={{ rotate: 15, scale: 1.2 }}
+                  >
                     {categoryIcons[project.category]}
-                  </span>
+                  </motion.span>
                   <span className="text-[10px] text-muted-foreground/50 uppercase tracking-wider font-mono">
                     {categoryLabels[project.category]}
                   </span>
@@ -74,7 +95,6 @@ export function ProjectsSection() {
                 ))}
               </ul>
 
-              {/* Bottom gradient line */}
               <div className="mt-4 h-px bg-border">
                 <div className="h-full w-0 group-hover:w-full bg-gradient-to-r from-primary/60 to-neon-pink/40 transition-all duration-700 rounded-full" />
               </div>
