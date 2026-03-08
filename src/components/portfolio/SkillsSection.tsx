@@ -5,15 +5,16 @@ const stagger = {
   hidden: {},
   visible: { transition: { staggerChildren: 0.1 } },
 };
+const ease = [0.22, 1, 0.36, 1] as [number, number, number, number];
 const fadeUp = {
   hidden: { opacity: 0, y: 30, filter: 'blur(6px)' },
-  visible: { opacity: 1, y: 0, filter: 'blur(0px)', transition: { duration: 0.7, ease: [0.22, 1, 0.36, 1] } },
+  visible: { opacity: 1, y: 0, filter: 'blur(0px)', transition: { duration: 0.7, ease } },
 };
 const cardReveal = {
   hidden: { opacity: 0, y: 25, scale: 0.96 },
   visible: (i: number) => ({
     opacity: 1, y: 0, scale: 1,
-    transition: { delay: i * 0.08, duration: 0.55, ease: [0.22, 1, 0.36, 1] },
+    transition: { delay: i * 0.08, duration: 0.55, ease },
   }),
 };
 
