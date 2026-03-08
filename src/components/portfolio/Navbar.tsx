@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { Menu, X } from 'lucide-react';
+import { Menu, X, Cpu } from 'lucide-react';
 import { personalInfo } from '@/data/profile';
 import { ThemeToggle } from '@/components/layout/ThemeToggle';
 import { cn } from '@/lib/utils';
@@ -25,38 +25,43 @@ export function Navbar() {
 
   const scrollTo = (href: string) => {
     setMobileOpen(false);
-    const el = document.querySelector(href);
-    el?.scrollIntoView({ behavior: 'smooth' });
+    document.querySelector(href)?.scrollIntoView({ behavior: 'smooth' });
   };
 
   return (
     <motion.nav
       initial={{ y: -100 }}
       animate={{ y: 0 }}
-      transition={{ duration: 0.5 }}
+      transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
       className={cn(
-        'fixed top-0 left-0 right-0 z-50 transition-all duration-300',
+        'fixed top-0 left-0 right-0 z-50 transition-all duration-500',
         scrolled
-          ? 'bg-background/80 backdrop-blur-xl border-b border-border'
+          ? 'bg-background/70 backdrop-blur-2xl border-b border-primary/10'
           : 'bg-transparent'
       )}
     >
       <div className="max-w-6xl mx-auto px-6 flex items-center justify-between h-16">
-        <button onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })} className="font-mono text-sm text-primary font-medium tracking-wider">
-          {`<${personalInfo.name.split(' ')[0]} />`}
+        <button
+          onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+          className="flex items-center gap-2 font-display text-xs text-primary font-semibold tracking-[0.2em] uppercase hover:text-neon-pink transition-colors"
+        >
+          <Cpu className="size-4" />
+          {personalInfo.name.split(' ')[0]}
         </button>
 
-        <div className="hidden md:flex items-center gap-8">
+        <div className="hidden md:flex items-center gap-1">
           {navLinks.map(link => (
             <button
               key={link.href}
               onClick={() => scrollTo(link.href)}
-              className="text-sm text-muted-foreground hover:text-primary transition-colors font-mono"
+              className="px-3 py-1.5 text-xs text-muted-foreground hover:text-primary hover:bg-primary/5 rounded-sm transition-all font-mono tracking-wider uppercase"
             >
               {link.name}
             </button>
           ))}
-          <ThemeToggle />
+          <div className="ml-2 pl-2 border-l border-border">
+            <ThemeToggle />
+          </div>
         </div>
 
         <div className="md:hidden flex items-center gap-2">
@@ -69,15 +74,16 @@ export function Navbar() {
 
       {mobileOpen && (
         <motion.div
-          initial={{ opacity: 0, y: -10 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="md:hidden bg-background/95 backdrop-blur-xl border-b border-border px-6 py-4 space-y-3"
+          initial={{ opacity: 0, height: 0 }}
+          animate={{ opacity: 1, height: 'auto' }}
+          exit={{ opacity: 0, height: 0 }}
+          className="md:hidden bg-background/95 backdrop-blur-2xl border-b border-primary/10 px-6 py-4 space-y-1"
         >
           {navLinks.map(link => (
             <button
               key={link.href}
               onClick={() => scrollTo(link.href)}
-              className="block w-full text-left text-sm text-muted-foreground hover:text-primary transition-colors font-mono py-2"
+              className="block w-full text-left text-xs text-muted-foreground hover:text-primary transition-colors font-mono tracking-wider uppercase py-2.5 px-3 hover:bg-primary/5 rounded-sm"
             >
               {link.name}
             </button>
