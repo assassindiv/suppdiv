@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import { Github, Linkedin, Mail, ChevronDown, Terminal } from 'lucide-react';
+import { Github, Linkedin, Mail, Phone, ChevronDown, Terminal } from 'lucide-react';
 import { personalInfo } from '@/data/profile';
 import { useEffect, useState } from 'react';
 
@@ -32,6 +32,13 @@ function TypeWriter({ text, delay = 0 }: { text: string; delay?: number }) {
 }
 
 export function HeroSection() {
+  const contactLinks = [
+    { icon: Github, href: personalInfo.socialLinks.github, label: 'GitHub', external: true },
+    { icon: Linkedin, href: personalInfo.socialLinks.linkedin, label: 'LinkedIn', external: true },
+    { icon: Mail, href: `mailto:${personalInfo.email}`, label: personalInfo.email, external: false },
+    { icon: Phone, href: `tel:${personalInfo.phone}`, label: personalInfo.phone, external: false },
+  ].filter(l => l.href);
+
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden scanline-overlay">
       <div className="absolute inset-0 grid-bg" />
@@ -91,29 +98,29 @@ export function HeroSection() {
           </p>
         </motion.div>
 
+        {/* Social & Contact Icons */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.5 }}
-          className="flex items-center justify-center gap-3"
+          className="flex items-center justify-center gap-3 flex-wrap"
         >
-          {[
-            { icon: Github, href: personalInfo.socialLinks.github, label: 'GitHub' },
-            { icon: Linkedin, href: personalInfo.socialLinks.linkedin, label: 'LinkedIn' },
-            { icon: Mail, href: `mailto:${personalInfo.email}`, label: 'Email' },
-          ].filter(l => l.href).map(link => (
+          {contactLinks.map(link => (
             <motion.a
               key={link.label}
               href={link.href}
-              target={link.label !== 'Email' ? '_blank' : undefined}
+              target={link.external ? '_blank' : undefined}
               rel="noopener noreferrer"
-              whileHover={{ scale: 1.1, y: -3 }}
+              whileHover={{ scale: 1.08, y: -4 }}
               whileTap={{ scale: 0.95 }}
-              className="group relative p-3 rounded-sm border border-border bg-card/50 backdrop-blur-sm hover:neon-border hover:bg-primary/5 transition-all duration-300"
+              className="group relative flex items-center gap-2 px-4 py-2.5 rounded-sm border border-border bg-card/50 backdrop-blur-sm hover:neon-border hover:bg-primary/5 transition-all duration-300"
             >
-              <link.icon className="size-5 text-muted-foreground group-hover:text-primary transition-colors duration-300" />
-              {/* Tooltip */}
-              <span className="absolute -bottom-8 left-1/2 -translate-x-1/2 text-[10px] font-mono text-primary opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">
+              <link.icon className="size-4 text-muted-foreground group-hover:text-primary transition-colors duration-300" />
+              <span className="text-xs font-mono text-muted-foreground group-hover:text-primary transition-colors duration-300 hidden sm:inline">
+                {link.label}
+              </span>
+              {/* Mobile tooltip */}
+              <span className="sm:hidden absolute -bottom-8 left-1/2 -translate-x-1/2 text-[10px] font-mono text-primary opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">
                 {link.label}
               </span>
             </motion.a>
