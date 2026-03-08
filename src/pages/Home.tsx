@@ -7,6 +7,8 @@ import { ProjectsSection } from '@/components/portfolio/ProjectsSection';
 import { SkillsSection } from '@/components/portfolio/SkillsSection';
 import { ContactSection } from '@/components/portfolio/ContactSection';
 import { FooterSection } from '@/components/portfolio/FooterSection';
+import { CustomCursor } from '@/components/portfolio/CustomCursor';
+import { PageTransition } from '@/components/portfolio/PageTransition';
 import { useEffect } from 'react';
 
 export default function Home() {
@@ -24,14 +26,17 @@ export default function Home() {
 
   return (
     <div className="min-h-screen bg-background">
+      <CustomCursor />
       <Navbar />
-      <HeroSection />
-      <AboutSection />
-      <ExperienceSection />
-      <ProjectsSection />
-      <SkillsSection />
-      <ContactSection />
-      <FooterSection />
+      <PageTransition>
+        <HeroSection />
+        <AboutSection />
+        <ExperienceSection />
+        <ProjectsSection />
+        <SkillsSection />
+        <ContactSection />
+        <FooterSection />
+      </PageTransition>
     </div>
   );
 }
