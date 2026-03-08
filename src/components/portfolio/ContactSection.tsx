@@ -1,6 +1,6 @@
 import { motion } from 'framer-motion';
 import { personalInfo } from '@/data/profile';
-import { Mail, Phone, MapPin, Send } from 'lucide-react';
+import { Mail, Phone, MapPin, Send, Github, Linkedin } from 'lucide-react';
 
 export function ContactSection() {
   return (
@@ -23,6 +23,7 @@ export function ContactSection() {
           </p>
         </motion.div>
 
+        {/* Primary contact */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -48,6 +49,35 @@ export function ContactSection() {
             <Phone className="size-4" />
             {personalInfo.phone}
           </motion.a>
+        </motion.div>
+
+        {/* Social links */}
+        <motion.div
+          initial={{ opacity: 0, y: 15 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ delay: 0.15 }}
+          className="flex items-center justify-center gap-3"
+        >
+          {[
+            { icon: Github, href: personalInfo.socialLinks.github, label: 'GitHub' },
+            { icon: Linkedin, href: personalInfo.socialLinks.linkedin, label: 'LinkedIn' },
+          ].filter(l => l.href).map(link => (
+            <motion.a
+              key={link.label}
+              href={link.href}
+              target="_blank"
+              rel="noopener noreferrer"
+              whileHover={{ scale: 1.1, y: -3, borderColor: 'var(--neon)', boxShadow: '0 0 15px -5px var(--neon)' }}
+              whileTap={{ scale: 0.95 }}
+              className="group flex items-center gap-2 px-5 py-2.5 rounded-sm border border-border bg-card/50 hover:bg-primary/5 transition-all duration-300"
+            >
+              <link.icon className="size-4 text-muted-foreground group-hover:text-primary transition-colors" />
+              <span className="text-xs font-mono text-muted-foreground group-hover:text-primary transition-colors tracking-wider">
+                {link.label}
+              </span>
+            </motion.a>
+          ))}
         </motion.div>
 
         <motion.div
