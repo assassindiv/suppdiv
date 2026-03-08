@@ -40,6 +40,7 @@ export const projects: Project[] = [
     ],
     slug: 'transformer-lm',
     category: 'ml',
+    githubUrl: 'https://github.com/assassindiv/Small-LM',
   },
   {
     id: '2',
