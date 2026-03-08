@@ -1,95 +1,75 @@
 import { motion } from 'framer-motion';
 import { personalInfo } from '@/data/profile';
-import { Mail, Phone, MapPin, Send, Github, Linkedin } from 'lucide-react';
+import { Mail, Phone, MapPin, Github, Linkedin, ArrowUpRight } from 'lucide-react';
 
 export function ContactSection() {
   return (
-    <section id="contact" className="relative py-24 md:py-32 px-6 overflow-hidden">
-      <div className="absolute inset-0 hex-pattern opacity-10" />
-
-      <div className="relative max-w-3xl mx-auto text-center space-y-8">
+    <section id="contact" className="py-24 md:py-32 px-6">
+      <div className="max-w-2xl mx-auto text-center space-y-8">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="space-y-3"
         >
-          <h2 className="font-mono text-xs text-primary tracking-[0.3em] uppercase">
-            <span className="text-neon-pink">{'>'}</span> contact.open()
-          </h2>
-          <h3 className="text-3xl md:text-4xl font-display font-bold tracking-tight">Let's Connect</h3>
-          <p className="text-sm text-muted-foreground max-w-lg mx-auto font-mono">
-            Open to discussing new projects, research collaborations, or ML/DL engineering opportunities.
+          <p className="text-sm uppercase tracking-[0.2em] text-primary/60 font-mono mb-2">Contact</p>
+          <h2 className="text-2xl md:text-3xl font-display font-bold tracking-tight">Get in Touch</h2>
+          <p className="text-sm text-muted-foreground mt-3 max-w-md mx-auto">
+            Open to discussing ML/DL engineering roles, research collaborations, or interesting projects.
           </p>
         </motion.div>
 
-        {/* Primary contact */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ delay: 0.1 }}
-          className="flex flex-col sm:flex-row items-center justify-center gap-4"
-        >
-          <motion.a
-            href={`mailto:${personalInfo.email}`}
-            whileHover={{ scale: 1.03, y: -2, boxShadow: '0 0 25px -5px var(--neon), 0 10px 30px -10px var(--neon)' }}
-            whileTap={{ scale: 0.98 }}
-            className="group flex items-center gap-3 px-6 py-3 rounded-sm neon-border bg-primary/5 text-primary hover:bg-primary hover:text-primary-foreground transition-all duration-300 font-mono text-xs tracking-wider"
-          >
-            <Send className="size-4 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
-            {personalInfo.email}
-          </motion.a>
-          <motion.a
-            href={`tel:${personalInfo.phone}`}
-            whileHover={{ scale: 1.03, y: -2, borderColor: 'var(--neon)', boxShadow: '0 0 15px -5px var(--neon)' }}
-            whileTap={{ scale: 0.98 }}
-            className="flex items-center gap-3 px-6 py-3 rounded-sm border border-border bg-card hover:bg-primary/5 transition-all duration-300 font-mono text-xs text-muted-foreground tracking-wider"
-          >
-            <Phone className="size-4" />
-            {personalInfo.phone}
-          </motion.a>
-        </motion.div>
-
-        {/* Social links */}
         <motion.div
           initial={{ opacity: 0, y: 15 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ delay: 0.15 }}
-          className="flex items-center justify-center gap-3"
+          transition={{ delay: 0.1 }}
+          className="flex flex-col sm:flex-row items-center justify-center gap-3"
         >
-          {[
-            { icon: Github, href: personalInfo.socialLinks.github, label: 'GitHub' },
-            { icon: Linkedin, href: personalInfo.socialLinks.linkedin, label: 'LinkedIn' },
-          ].filter(l => l.href).map(link => (
-            <motion.a
-              key={link.label}
-              href={link.href}
-              target="_blank"
-              rel="noopener noreferrer"
-              whileHover={{ scale: 1.1, y: -3, borderColor: 'var(--neon)', boxShadow: '0 0 15px -5px var(--neon)' }}
-              whileTap={{ scale: 0.95 }}
-              className="group flex items-center gap-2 px-5 py-2.5 rounded-sm border border-border bg-card/50 hover:bg-primary/5 transition-all duration-300"
-            >
-              <link.icon className="size-4 text-muted-foreground group-hover:text-primary transition-colors" />
-              <span className="text-xs font-mono text-muted-foreground group-hover:text-primary transition-colors tracking-wider">
-                {link.label}
-              </span>
-            </motion.a>
-          ))}
+          <a
+            href={`mailto:${personalInfo.email}`}
+            className="group flex items-center gap-2 px-5 py-2.5 rounded-lg border border-primary/30 bg-primary/5 text-primary hover:bg-primary hover:text-primary-foreground transition-all duration-300 text-sm"
+          >
+            <Mail className="size-4" />
+            {personalInfo.email}
+            <ArrowUpRight className="size-3 opacity-0 group-hover:opacity-100 transition-opacity" />
+          </a>
+          <a
+            href={`tel:${personalInfo.phone}`}
+            className="flex items-center gap-2 px-5 py-2.5 rounded-lg border border-border hover:border-primary/30 text-muted-foreground hover:text-foreground transition-all duration-300 text-sm"
+          >
+            <Phone className="size-4" />
+            {personalInfo.phone}
+          </a>
         </motion.div>
 
         <motion.div
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           viewport={{ once: true }}
-          transition={{ delay: 0.2 }}
-          className="flex items-center justify-center gap-2 text-xs text-muted-foreground font-mono"
+          transition={{ delay: 0.15 }}
+          className="flex items-center justify-center gap-2"
         >
-          <MapPin className="size-3 text-primary" />
-          {personalInfo.location}
+          {[
+            { icon: Github, href: personalInfo.socialLinks.github, label: 'GitHub' },
+            { icon: Linkedin, href: personalInfo.socialLinks.linkedin, label: 'LinkedIn' },
+          ].filter(l => l.href).map(link => (
+            <a
+              key={link.label}
+              href={link.href}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center gap-2 px-4 py-2 rounded-lg text-muted-foreground hover:text-foreground hover:bg-muted/50 transition-all duration-200 text-sm"
+            >
+              <link.icon className="size-4" />
+              {link.label}
+            </a>
+          ))}
         </motion.div>
+
+        <p className="flex items-center justify-center gap-1.5 text-xs text-muted-foreground/60">
+          <MapPin className="size-3" />
+          {personalInfo.location}
+        </p>
       </div>
     </section>
   );
